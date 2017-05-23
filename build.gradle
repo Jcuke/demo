@@ -1,0 +1,55 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.3.RELEASE'
+	}
+	repositories {
+		mavenLocal()
+		maven {url "http://maven.aliyun.com/nexus/content/repositories/central"} 
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.7
+
+repositories {
+	mavenLocal()
+	maven {url "http://maven.aliyun.com/nexus/content/repositories/central"} 
+	mavenCentral()
+}
+
+
+dependencies {
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.6'
+    compile('org.springframework.boot:spring-boot-starter-web')
+	runtime('org.springframework.boot:spring-boot-devtools')
+//	testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    compile group: 'us.codecraft', name: 'webmagic-core', version: '0.5.2'
+    compile group: 'us.codecraft', name: 'webmagic-extension', version: '0.5.2'
+    compile 'org.seleniumhq.selenium:selenium-java:2.8.0'
+    compile group: 'us.codecraft', name: 'webmagic-selenium', version: '0.5.2'
+
+    compile group: 'org.mybatis', name: 'mybatis', version: '3.4.1'
+    compile group: 'org.mybatis', name: 'mybatis-spring', version: '1.3.0'
+    compile group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '1.1.1'
+    compile group: 'javax.transaction', name: 'jta', version: '1.1'
+    compile group: 'org.springframework', name: 'spring-tx', version: '3.2.9.RELEASE'
+    compile group: 'com.atomikos', name: 'transactions-osgi', version: '4.0.4'
+
+//    compile files('localJars/commons-lang-2.5.jar')
+    compile fileTree(dir:'localJars',include:['*.jar'])
+
+
+    configurations {
+        compile.exclude module: 'slf4j-log4j12'
+    }
+
+}

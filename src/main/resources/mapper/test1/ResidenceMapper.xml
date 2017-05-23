@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ResidenceMapper" >
+    <resultMap id="BaseResultMap" type="com.cuke.entity.Residence" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="district" property="district" jdbcType="VARCHAR" />
+        <result column="districtid" property="districtid" jdbcType="VARCHAR" />
+        <result column="city" property="city" jdbcType="VARCHAR" />
+        <result column="cityid" property="cityid" jdbcType="VARCHAR" />
+        <result column="xiaoqu" property="xiaoqu" jdbcType="VARCHAR" />
+        <result column="xiaoquid" property="xiaoquid" jdbcType="VARCHAR" />
+        <result column="jiage" property="jiage" jdbcType="DECIMAL" />
+        <result column="danjia" property="danjia" jdbcType="DECIMAL" />
+        <result column="area" property="area" jdbcType="REAL" />
+    </resultMap>
+
+    <!--<select id="saveSelective" resultType="com.cuke.entity.Residence">-->
+        <!--select 1 from dual;-->
+    <!--</select>-->
+
+    <sql id="Base_Column_List" >
+        `id`, `title`, `district`, `districtid`, `city`, `cityid`, `xiaoqu`, `xiaoquid`, 
+        `jiage`, `danjia`, `area`
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from residence
+        where `id` = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByModel" resultMap="BaseResultMap" parameterType="com.cuke.entity.Residence" >
+        select 
+<include refid="Base_Column_List" /> 
+from residence
+        <where >
+            <include refid="condition" />
+        </where>
+        <if test="orderBy!=null" >
+            order by ${orderBy}
+        </if>
+        <if test="orderBy!=null and sortBy!=null" >
+            ${sortBy} 
+        </if>
+        <if test="beginRow!=null and pageSize!=null" >
+            limit #{beginRow},#{pageSize}
+        </if>
+    </select>
+
+    <select id="selectCountByModel" resultType="java.lang.Integer" parameterType="com.cuke.entity.Residence" >
+        select  count(1) 
+        from residence
+        <where >
+            <include refid="condition" />
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="com.cuke.entity.Residence" useGeneratedKeys="true" keyProperty="id">
+        insert into residence (`id`, `title`, `district`, 
+            `districtid`, `city`, `cityid`, 
+            `xiaoqu`, `xiaoquid`, `jiage`, 
+            `danjia`, `area`)
+        values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, 
+            #{districtid,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{cityid,jdbcType=VARCHAR}, 
+            #{xiaoqu,jdbcType=VARCHAR}, #{xiaoquid,jdbcType=VARCHAR}, #{jiage,jdbcType=DECIMAL}, 
+            #{danjia,jdbcType=DECIMAL}, #{area,jdbcType=REAL})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.cuke.entity.Residence" useGeneratedKeys="true" keyProperty="id">
+        insert into residence
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                `id`,
+            </if>
+            <if test="title != null" >
+                `title`,
+            </if>
+            <if test="district != null" >
+                `district`,
+            </if>
+            <if test="districtid != null" >
+                `districtid`,
+            </if>
+            <if test="city != null" >
+                `city`,
+            </if>
+            <if test="cityid != null" >
+                `cityid`,
+            </if>
+            <if test="xiaoqu != null" >
+                `xiaoqu`,
+            </if>
+            <if test="xiaoquid != null" >
+                `xiaoquid`,
+            </if>
+            <if test="jiage != null" >
+                `jiage`,
+            </if>
+            <if test="danjia != null" >
+                `danjia`,
+            </if>
+            <if test="area != null" >
+                `area`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="title != null" >
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="district != null" >
+                #{district,jdbcType=VARCHAR},
+            </if>
+            <if test="districtid != null" >
+                #{districtid,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null" >
+                #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="cityid != null" >
+                #{cityid,jdbcType=VARCHAR},
+            </if>
+            <if test="xiaoqu != null" >
+                #{xiaoqu,jdbcType=VARCHAR},
+            </if>
+            <if test="xiaoquid != null" >
+                #{xiaoquid,jdbcType=VARCHAR},
+            </if>
+            <if test="jiage != null" >
+                #{jiage,jdbcType=DECIMAL},
+            </if>
+            <if test="danjia != null" >
+                #{danjia,jdbcType=DECIMAL},
+            </if>
+            <if test="area != null" >
+                #{area,jdbcType=REAL},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.cuke.entity.Residence" >
+        update residence
+        <set >
+            <if test="title != null" >
+                `title` = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="district != null" >
+                `district` = #{district,jdbcType=VARCHAR},
+            </if>
+            <if test="districtid != null" >
+                `districtid` = #{districtid,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null" >
+                `city` = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="cityid != null" >
+                `cityid` = #{cityid,jdbcType=VARCHAR},
+            </if>
+            <if test="xiaoqu != null" >
+                `xiaoqu` = #{xiaoqu,jdbcType=VARCHAR},
+            </if>
+            <if test="xiaoquid != null" >
+                `xiaoquid` = #{xiaoquid,jdbcType=VARCHAR},
+            </if>
+            <if test="jiage != null" >
+                `jiage` = #{jiage,jdbcType=DECIMAL},
+            </if>
+            <if test="danjia != null" >
+                `danjia` = #{danjia,jdbcType=DECIMAL},
+            </if>
+            <if test="area != null" >
+                `area` = #{area,jdbcType=REAL},
+            </if>
+        </set>
+        where `id` = #{id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from residence
+        where `id` = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <sql id="condition" >
+        <if test="title != null" >
+             and `title` = #{title}
+        </if>
+        <if test="district != null" >
+             and `district` = #{district}
+        </if>
+        <if test="districtid != null" >
+             and `districtid` = #{districtid}
+        </if>
+        <if test="city != null" >
+             and `city` = #{city}
+        </if>
+        <if test="cityid != null" >
+             and `cityid` = #{cityid}
+        </if>
+        <if test="xiaoqu != null" >
+             and `xiaoqu` = #{xiaoqu}
+        </if>
+        <if test="xiaoquid != null" >
+             and `xiaoquid` = #{xiaoquid}
+        </if>
+        <if test="jiage != null" >
+             and `jiage` = #{jiage}
+        </if>
+        <if test="danjia != null" >
+             and `danjia` = #{danjia}
+        </if>
+        <if test="area != null" >
+             and `area` = #{area}
+        </if>
+    </sql>
+
+</mapper>
