@@ -17,6 +17,10 @@ import java.util.Vector;
  */
 public class SysInit {
 
+    static {
+        System.setProperty("javax.Net.ssl.trustStore", "classpath:jssecacerts");
+    }
+
     public static Vector<String> districUtls = new Vector<>();
 
     public static void init1(){

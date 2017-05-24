@@ -2,6 +2,7 @@ package com.cuke.service.impl;
 
 import com.cuke.mybatis.Inte.IControl;
 import com.cuke.service.BaseService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
@@ -18,6 +19,7 @@ import java.util.List;
 @Component
 public class BaseServiceImpl<M, PK extends Serializable> implements BaseService<M, PK> {
 
+    @Qualifier("transactionManager_annotation00102")
     @Resource
     private JtaTransactionManager txManager;
     public IControl getBaseDao(){

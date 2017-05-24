@@ -7,6 +7,7 @@ import com.cuke.service.ResidenceService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -30,6 +31,7 @@ public class ResidenceServiceImpl extends BaseServiceImpl implements ResidenceSe
     }
 
 
+    @Transactional
     @Override
     public void saves() throws Exception{
         TransactionStatus ts = null;
@@ -44,8 +46,6 @@ public class ResidenceServiceImpl extends BaseServiceImpl implements ResidenceSe
             residenceDao2.saveSelective(residence2);
             this.txCommit(ts);
         }catch (Exception e){
-            this.txRollback(ts);
-//            e.printStackTrace();
             throw e;
         }finally {
             if (null != ts && !ts.isCompleted()){

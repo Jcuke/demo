@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.dao.support.ChainedPersistenceExceptionTranslator;
 import org.springframework.dao.support.PersistenceExceptionTranslator;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -12,21 +12,19 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-//@ImportResource(locations={"classpath:spring-mybatis.xml"})
+@ImportResource(locations={"classpath:spring-mybatis.xml"})
 @EnableTransactionManagement
 @EnableScheduling
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.cuke"})
 public class DemoApplication extends WebMvcConfigurerAdapter{
 
-    private static ClassPathXmlApplicationContext context;
-
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 
 //        new Thread(new MyThread()).start();
 
-//        SysInit.init1();
+        SysInit.init1();
 	}
 
     @Override

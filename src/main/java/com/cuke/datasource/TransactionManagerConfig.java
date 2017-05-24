@@ -29,7 +29,7 @@ public class TransactionManagerConfig {
         return userTransactionManager;
     }
 
-    @Bean(name = "transactionManager")
+    @Bean(name = "transactionManager_annotation00102")
     @DependsOn({ "userTransaction", "atomikosTransactionManager" })
     public JtaTransactionManager transactionManager(@Qualifier("userTransaction")UserTransaction ut, @Qualifier("atomikosTransactionManager")UserTransactionManager utm) throws Throwable {
         JtaTransactionManager manager = new JtaTransactionManager(ut, utm);
