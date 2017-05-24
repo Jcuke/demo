@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wangjw on 2017/5/18 0018.
@@ -19,6 +21,16 @@ public class HelloController {
 
     @Resource
     private ResidenceService residenceService;
+
+    @RequestMapping("/getWhEachDistrictData")
+    @ResponseBody
+    public List getWhEachDistrictData(){
+        System.out.println("hello");
+
+        List list = residenceService.selectCustomSqlToList("getWhEachDistrictData", null);
+
+        return list;
+    }
 
     @RequestMapping("/hello")
     @ResponseBody

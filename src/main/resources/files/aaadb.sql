@@ -54,7 +54,7 @@ CREATE TABLE `districturl` (
   `districtid` varchar(100) DEFAULT NULL,
   `url` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=184 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=184 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of districturl

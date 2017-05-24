@@ -24,6 +24,8 @@ public class SysInit {
     public static Vector<String> districUtls = new Vector<>();
 
     public static void init1(){
+        start2();
+        if(true) return;
         try {
             Spider spider1 = start1();
             while(true){

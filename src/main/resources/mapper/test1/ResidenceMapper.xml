@@ -13,6 +13,7 @@
         <result column="jiage" property="jiage" jdbcType="DECIMAL" />
         <result column="danjia" property="danjia" jdbcType="DECIMAL" />
         <result column="area" property="area" jdbcType="REAL" />
+        <result column="fyurl" property="fyurl" jdbcType="VARCHAR" />
     </resultMap>
 
     <!--<select id="saveSelective" resultType="com.cuke.entity.Residence">-->
@@ -21,7 +22,7 @@
 
     <sql id="Base_Column_List" >
         `id`, `title`, `district`, `districtid`, `city`, `cityid`, `xiaoqu`, `xiaoquid`, 
-        `jiage`, `danjia`, `area`
+        `jiage`, `danjia`, `area`, `fyurl`
     </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -65,7 +66,7 @@ from residence
         values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, 
             #{districtid,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{cityid,jdbcType=VARCHAR}, 
             #{xiaoqu,jdbcType=VARCHAR}, #{xiaoquid,jdbcType=VARCHAR}, #{jiage,jdbcType=DECIMAL}, 
-            #{danjia,jdbcType=DECIMAL}, #{area,jdbcType=REAL})
+            #{danjia,jdbcType=DECIMAL}, #{area,jdbcType=REAL},#{fyurl,jdbcType=VARCHAR})
     </insert>
 
     <insert id="insertSelective" parameterType="com.cuke.entity.Residence" useGeneratedKeys="true" keyProperty="id">
@@ -104,6 +105,9 @@ from residence
             <if test="area != null" >
                 `area`,
             </if>
+            <if test="fyurl != null" >
+                `fyurl`,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="id != null" >
@@ -138,6 +142,9 @@ from residence
             </if>
             <if test="area != null" >
                 #{area,jdbcType=REAL},
+            </if>
+            <if test="fyurl != null" >
+                #{fyurl,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -174,6 +181,9 @@ from residence
             </if>
             <if test="area != null" >
                 `area` = #{area,jdbcType=REAL},
+            </if>
+            <if test="fyurl != null" >
+                `fyurl` = #{fyurl,jdbcType=VARCHAR},
             </if>
         </set>
         where `id` = #{id,jdbcType=INTEGER}
@@ -215,6 +225,13 @@ from residence
         <if test="area != null" >
              and `area` = #{area}
         </if>
+        <if test="fyurl != null" >
+            and `fyurl` = #{fyurl}
+        </if>
     </sql>
+
+    <select id="getWhEachDistrictData" resultType="java.util.Map">
+        select districtid,floor(avg(danjia)) as jiage from residence t where t.cityid='wh' group by districtid
+    </select>
 
 </mapper>

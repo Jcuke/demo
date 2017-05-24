@@ -29,6 +29,7 @@ public class Residence extends XModel{
     private BigDecimal jiage;
     private BigDecimal danjia;
     private Float area;
+    private String fyurl;
 
     public Integer getId() {
         return id;
@@ -97,6 +98,14 @@ public class Residence extends XModel{
         this.area = area;
     }
 
+    public String getFyurl() {
+        return fyurl;
+    }
+
+    public void setFyurl(String fyurl) {
+        this.fyurl = fyurl;
+    }
+
     @Override
     public String toString() {
         return "Residence{" +
@@ -111,6 +120,7 @@ public class Residence extends XModel{
                 ", jiage=" + jiage +
                 ", danjia=" + danjia +
                 ", area=" + area +
+                ", fyurl='" + fyurl + '\'' +
                 '}';
     }
 }

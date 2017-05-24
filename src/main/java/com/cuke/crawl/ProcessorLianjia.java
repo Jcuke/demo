@@ -63,8 +63,12 @@ public class ProcessorLianjia implements PageProcessor{
                     String districCode = pageUrl.replaceAll("https://[a-z]+.lianjia.com/ershoufang/", "").replaceAll("/pg[0-9]+/", "");
                     res.setCityid(cityCode);
                     res.setDistrictid(districCode);
-                    residenceService.saveSelective(res);
-
+                    res.setFyurl(s.xpath("//*/a/@href").toString());
+                    Residence model = new Residence();
+                    model.setFyurl(res.getFyurl());
+                    if(residenceService.selectCountByModel(model) == 0){
+                        residenceService.saveSelective(res);
+                    }
                 }
             }
         }catch (Exception e){
