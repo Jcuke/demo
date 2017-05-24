@@ -1,4 +1,4 @@
-package com.cuke.example.demo;
+package com.cuke.demo;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by sunyz on 2017/5/22 0022.
+ * Created by wangjw on 2017/5/22 0022.
  */
 @Component
 public final class SpringBeanUtil implements ApplicationContextAware {

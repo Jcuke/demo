@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Created by sunyz on 2017/5/19 0019.
+ * Created by wangjw on 2017/5/19 0019.
  */
 public class ProcessorLianjia implements PageProcessor{
 

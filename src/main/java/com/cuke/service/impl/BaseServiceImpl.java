@@ -1,7 +1,8 @@
 package com.cuke.service.impl;
 
-import com.cuke.dao.impl.BaseDb1DaoImpl;
+import com.cuke.mybatis.Inte.IControl;
 import com.cuke.service.BaseService;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.jta.JtaTransactionManager;
@@ -12,75 +13,75 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by sunyz on 2017/5/19 0019.
+ * Created by wangjw on 2017/5/19 0019.
  */
+@Component
 public class BaseServiceImpl<M, PK extends Serializable> implements BaseService<M, PK> {
 
     @Resource
     private JtaTransactionManager txManager;
-
-    @Resource
-    private BaseDb1DaoImpl baseDao;
-
+    public IControl getBaseDao(){
+        return null;
+    }
 
     @Override
     public M selectByPrimaryKey(PK id) {
-        return (M) baseDao.selectByPrimaryKey(id);
+        return (M) getBaseDao().selectByPrimaryKey(id);
     }
 
     @Override
     public List<M> selectListByModel(M m) {
-        return baseDao.selectListByModel(m);
+        return getBaseDao().selectListByModel(m);
     }
 
     @Override
     public M selectByModel(M m) {
-        return (M) baseDao.selectByModel(m);
+        return (M) getBaseDao().selectByModel(m);
     }
 
     @Override
     public Integer selectCountByModel(M m) {
-        return baseDao.selectCountByModel(m);
+        return getBaseDao().selectCountByModel(m);
     }
 
     @Override
     public <M> M selectCustomSqlToObject(String sqlID, Object obj) {
-        return (M) baseDao.selectCustomSqlToObject(sqlID, obj);
+        return (M) getBaseDao().selectCustomSqlToObject(sqlID, obj);
     }
 
     @Override
     public <M> List<M> selectCustomSqlToList(String sqlID, Object obj) {
-        return baseDao.selectCustomSqlToList(sqlID, obj);
+        return getBaseDao().selectCustomSqlToList(sqlID, obj);
     }
 
     @Override
     public Integer saveSelective(M m) {
-        return baseDao.saveSelective(m);
+        return getBaseDao().saveSelective(m);
     }
 
     @Override
     public Integer updateByPrimaryKeySelective(M m) {
-        return baseDao.updateByPrimaryKeySelective(m);
+        return getBaseDao().updateByPrimaryKeySelective(m);
     }
 
     @Override
     public Integer deleteByPrimaryKey(PK id) {
-        return baseDao.deleteByPrimaryKey(id);
+        return getBaseDao().deleteByPrimaryKey(id);
     }
 
     @Override
     public Integer saveCustomSql(String sqlID, Object obj) {
-        return baseDao.saveCustomSql(sqlID, obj);
+        return getBaseDao().saveCustomSql(sqlID, obj);
     }
 
     @Override
     public Integer updateCustomSql(String sqlID, Object obj) {
-        return baseDao.updateCustomSql(sqlID, obj);
+        return getBaseDao().updateCustomSql(sqlID, obj);
     }
 
     @Override
     public Integer deleteCustomSql(String sqlID, Object obj) {
-        return baseDao.deleteCustomSql(sqlID, obj);
+        return getBaseDao().deleteCustomSql(sqlID, obj);
     }
 
 

@@ -1,7 +1,7 @@
-package com.cuke.example.demo;
+package com.cuke.demo;
 
 /**
- * Created by sunyz on 2017/5/18 0018.
+ * Created by wangjw on 2017/5/18 0018.
  */
 public class MyThread implements Runnable {
 

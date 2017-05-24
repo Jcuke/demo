@@ -1,9 +1,9 @@
 package com.cuke.service;
 
 /**
- * Created by sunyz on 2017/5/19 0019.
+ * Created by wangjw on 2017/5/19 0019.
  */
 public interface ResidenceService extends BaseService{
 
-    public void saves();
+    public void saves() throws Exception;
 }

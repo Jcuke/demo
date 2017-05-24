@@ -1,12 +1,16 @@
 package com.cuke.service;
 
+import com.cuke.mybatis.Inte.IControl;
+
 import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by sunyz on 2017/5/19 0019.
+ * Created by wangjw on 2017/5/19 0019.
  */
 public interface BaseService<M, PK extends Serializable> {
+
+    public IControl getBaseDao();
 
     public M selectByPrimaryKey(PK id);
 

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="DistricturlMapper" >
+    <resultMap id="BaseResultMap" type="com.cuke.entity.Districturl" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="cityid" property="cityid" jdbcType="VARCHAR" />
+        <result column="districtid" property="districtid" jdbcType="VARCHAR" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        `id`, `cityid`, `districtid`, `url`
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from districturl
+        where `id` = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByModel" resultMap="BaseResultMap" parameterType="com.cuke.entity.Districturl" >
+        select 
+<include refid="Base_Column_List" /> 
+from districturl
+        <where >
+            <include refid="condition" />
+        </where>
+        <if test="orderBy!=null" >
+            order by ${orderBy}
+        </if>
+        <if test="orderBy!=null and sortBy!=null" >
+            ${sortBy} 
+        </if>
+        <if test="beginRow!=null and pageSize!=null" >
+            limit #{beginRow},#{pageSize}
+        </if>
+    </select>
+
+    <select id="selectCountByModel" resultType="java.lang.Integer" parameterType="com.cuke.entity.Districturl" >
+        select  count(1) 
+        from districturl
+        <where >
+            <include refid="condition" />
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="com.cuke.entity.Districturl" >
+        insert into districturl (`id`, `cityid`, `districtid`, 
+            `url`)
+        values (#{id,jdbcType=INTEGER}, #{cityid,jdbcType=VARCHAR}, #{districtid,jdbcType=VARCHAR}, 
+            #{url,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.cuke.entity.Districturl" >
+        insert into districturl
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                `id`,
+            </if>
+            <if test="cityid != null" >
+                `cityid`,
+            </if>
+            <if test="districtid != null" >
+                `districtid`,
+            </if>
+            <if test="url != null" >
+                `url`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="cityid != null" >
+                #{cityid,jdbcType=VARCHAR},
+            </if>
+            <if test="districtid != null" >
+                #{districtid,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null" >
+                #{url,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.cuke.entity.Districturl" >
+        update districturl
+        <set >
+            <if test="cityid != null" >
+                `cityid` = #{cityid,jdbcType=VARCHAR},
+            </if>
+            <if test="districtid != null" >
+                `districtid` = #{districtid,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null" >
+                `url` = #{url,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where `id` = #{id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from districturl
+        where `id` = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <sql id="condition" >
+        <if test="cityid != null" >
+             and `cityid` = #{cityid}
+        </if>
+        <if test="districtid != null" >
+             and `districtid` = #{districtid}
+        </if>
+        <if test="url != null" >
+             and `url` = #{url}
+        </if>
+    </sql>
+
+</mapper>

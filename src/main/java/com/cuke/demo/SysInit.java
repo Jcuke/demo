@@ -1,8 +1,10 @@
-package com.cuke.example.demo;
+package com.cuke.demo;
 
 import com.cuke.config.Constant;
 import com.cuke.crawl.ProcessorGetDistrict;
 import com.cuke.crawl.ProcessorLianjia;
+import com.cuke.entity.Districturl;
+import com.cuke.service.DistricturlService;
 import com.cuke.service.ResidenceService;
 import com.google.common.collect.Lists;
 import us.codecraft.webmagic.Spider;
@@ -11,7 +13,7 @@ import java.util.List;
 import java.util.Vector;
 
 /**
- * Created by sunyz on 2017/5/22 0022.
+ * Created by wangjw on 2017/5/22 0022.
  */
 public class SysInit {
 
@@ -37,6 +39,8 @@ public class SysInit {
     }
 
     public static Spider start1(){
+        DistricturlService rs = (DistricturlService) SpringBeanUtil.getBean("districturlService");
+        ProcessorGetDistrict lj = new ProcessorGetDistrict(rs);
         Spider spider = null;
         try {
             String[] ss = Constant.cityCodeArray;
@@ -44,9 +48,9 @@ public class SysInit {
             for (int i = 0; i < ss.length; i++) {
                 xx[i] = "http://"+ ss[i] +".lianjia.com/ershoufang/";
             }
-            spider = Spider.create(new ProcessorGetDistrict());
+            spider = Spider.create(lj);
             spider.addUrl(xx);
-            spider.thread(1);
+            spider.thread(3);
             spider.setExitWhenComplete(true);
             spider.start();
         }catch (Exception e){
@@ -57,12 +61,16 @@ public class SysInit {
 
     public static Spider start2(){
         ResidenceService rs = (ResidenceService) SpringBeanUtil.getBean("residenceService");
+        DistricturlService dus = (DistricturlService) SpringBeanUtil.getBean("districturlService");
         ProcessorLianjia lj = new ProcessorLianjia(rs);
         Spider spider = null;
         try {
             List<String> urls = Lists.newArrayList();
             List<String> list = null;
-            for (String districUtl : districUtls) {
+//            for (String districUtl : districUtls) {
+            List<Districturl> districturls = dus.selectListByModel(new Districturl());
+            for (Districturl districturl : districturls) {
+                String districUtl = districturl.getUrl();
                 list = Lists.newArrayList();
                 for (int i = 1; i <=100; i++) {
                     list.add(districUtl + "pg"+ i +"/");
@@ -73,7 +81,7 @@ public class SysInit {
             //spider.addUrl("http://wh.lianjia.com/ershoufang/");
             //spider.addUrl(list.toArray(new String[list.size()]));
             spider.addUrl(urls.toArray(new String[urls.size()]));
-            spider.thread(1);
+            spider.thread(60);
             spider.setExitWhenComplete(true);
             spider.start();
         }catch (Exception e){

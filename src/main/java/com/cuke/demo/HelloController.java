@@ -1,4 +1,4 @@
-package com.cuke.example.demo;
+package com.cuke.demo;
 
 import com.cuke.service.ResidenceService;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Created by sunyz on 2017/5/18 0018.
+ * Created by wangjw on 2017/5/18 0018.
  */
 
 @RestController
@@ -30,7 +30,11 @@ public class HelloController {
     @RequestMapping("/helloJson")
     public StuDomain getJson(){
         System.out.println("getJson");
-        residenceService.saves();
+        try {
+            residenceService.saves();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         StuDomain sd = new StuDomain();
         sd.setName("rr3r3r3r");
         return sd;

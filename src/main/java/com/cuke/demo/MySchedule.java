@@ -1,7 +1,7 @@
-package com.cuke.example.demo;
+package com.cuke.demo;
 
 /**
- * Created by sunyz on 2017/5/19 0019.
+ * Created by wangjw on 2017/5/19 0019.
  */
 //@Component
 public class MySchedule {

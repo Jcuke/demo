@@ -1,4 +1,4 @@
-package com.cuke.example.demo;
+package com.cuke.demo;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by sunyz on 2017/5/18 0018.
+ * Created by wangjw on 2017/5/18 0018.
  */
 public class MyInterceptor implements HandlerInterceptor {
     @Override

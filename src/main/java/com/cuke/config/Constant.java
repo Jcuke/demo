@@ -3,11 +3,12 @@ package com.cuke.config;
 import us.codecraft.webmagic.Site;
 
 /**
- * Created by sunyz on 2017/5/23 0023.
+ * Created by wangjw on 2017/5/23 0023.
  */
 public class Constant {
 
-    public static final String[] cityCodeArray = {"bj","tj","nj","qd","dl","sz","cd","cq","jn","gz","hz","wh","cs","xm","sy", "hf"};
+
+    public static final String[] cityCodeArray = {"sh","wh","bj","tj","nj","qd","dl","sz","cd","cq","jn","gz","hz","cs","xm","sy", "hf"};
 
     public static final String url = "lianjia.com/ershoufang/";
 
@@ -16,7 +17,7 @@ public class Constant {
 
 
     public static final Site site = Site.me()
-            .setDomain("wh.lianjia.com")
+            .setDomain("lianjia.com")
             .setRetryTimes(6)
             .setCycleRetryTimes(6)
             .setSleepTime(2000)

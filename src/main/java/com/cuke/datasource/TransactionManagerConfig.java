@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.jta.JtaTransactionManager;
 
 import javax.transaction.UserTransaction;
 
+@EnableTransactionManagement
 @Configuration
 public class TransactionManagerConfig {
 
@@ -23,7 +25,7 @@ public class TransactionManagerConfig {
     @Bean(name = "atomikosTransactionManager", initMethod = "init", destroyMethod = "close")
     public UserTransactionManager atomikosTransactionManager() throws Throwable {
         UserTransactionManager userTransactionManager = new UserTransactionManager();
-        userTransactionManager.setForceShutdown(false);
+        userTransactionManager.setForceShutdown(true);
         return userTransactionManager;
     }
 

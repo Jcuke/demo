@@ -1,8 +1,9 @@
 package com.cuke.crawl;
 
 import com.cuke.config.Constant;
-import com.cuke.entity.Residence;
-import com.cuke.example.demo.SysInit;
+import com.cuke.entity.Districturl;
+import com.cuke.demo.SysInit;
+import com.cuke.service.DistricturlService;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
@@ -12,9 +13,15 @@ import us.codecraft.webmagic.selector.Selectable;
 import java.util.List;
 
 /**
- * Created by sunyz on 2017/5/19 0019.
+ * Created by wangjw on 2017/5/19 0019.
  */
 public class ProcessorGetDistrict implements PageProcessor{
+
+    public DistricturlService districturlService;
+
+    public ProcessorGetDistrict(DistricturlService districturlService) {
+        this.districturlService = districturlService;
+    }
 
     public ProcessorGetDistrict(){
     }
@@ -27,14 +34,30 @@ public class ProcessorGetDistrict implements PageProcessor{
         try {
             Thread.sleep(1000);
             if(page.getUrl().regex(url).match()){
-                List<Selectable> list = page.getHtml().xpath("//*[@data-role='ershoufang']/div/a").nodes();
+                List<Selectable> list = null;
+                if(page.getUrl().toString().contains("sh.")){
+                    list = page.getHtml().xpath("//*[@id=\"plateList\"]/div/a").nodes();
+                }else{
+                    list = page.getHtml().xpath("//*[@data-role='ershoufang']/div/a").nodes();
+                }
                 for (Selectable s : list) {
-                    Residence res = new Residence();
+                    if(s.toString().contains("不限")){
+                        continue;
+                    }
                     String districtCode = s.xpath("//*/@href").toString().replace("http://", "").split("/")[2];
                     String district = s.xpath("//*/text()").toString();
                     System.out.println(districtCode + "   " + district);
                     String cityCode = page.getUrl().toString().replace("http://", "").replace(".lianjia.com/ershoufang/", "");
-                    SysInit.districUtls.add("https://"+ cityCode +".lianjia.com/ershoufang/"+ districtCode +"/");
+                    String districtPageUrl = "https://"+ cityCode +".lianjia.com/ershoufang/"+ districtCode +"/";
+                    SysInit.districUtls.add(districtPageUrl);
+
+                    Districturl du = new Districturl();
+                    du.setDistrictid(districtCode);
+                    if(districturlService.selectCountByModel(du) == 0){
+                        du.setCityid(cityCode);
+                        du.setUrl(districtPageUrl);
+                        districturlService.saveSelective(du);
+                    }
                 }
             }
         }catch (Exception e){
