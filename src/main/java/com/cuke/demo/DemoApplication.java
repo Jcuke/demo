@@ -25,7 +25,14 @@ public class DemoApplication extends WebMvcConfigurerAdapter{
 //        new Thread(new MyThread()).start();
 
 //        SysInit.init1();
+        SysInit.start2();
 	}
+
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+//        super.addResourceHandlers(registry);
+//    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="DistrnamesMapper" >
+    <resultMap id="BaseResultMap" type="com.cuke.entity.Distrnames" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="cityid" property="cityid" jdbcType="VARCHAR" />
+        <result column="city" property="city" jdbcType="VARCHAR" />
+        <result column="districtid" property="districtid" jdbcType="VARCHAR" />
+        <result column="district" property="district" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        `id`, `cityid`, `city`, `districtid`, `district`
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from distrnames
+        where `id` = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByModel" resultMap="BaseResultMap" parameterType="com.cuke.entity.Distrnames" >
+        select 
+<include refid="Base_Column_List" /> 
+from distrnames
+        <where >
+            <include refid="condition" />
+        </where>
+        <if test="orderBy!=null" >
+            order by ${orderBy}
+        </if>
+        <if test="orderBy!=null and sortBy!=null" >
+            ${sortBy} 
+        </if>
+        <if test="beginRow!=null and pageSize!=null" >
+            limit #{beginRow},#{pageSize}
+        </if>
+    </select>
+
+    <select id="selectCountByModel" resultType="java.lang.Integer" parameterType="com.cuke.entity.Distrnames" >
+        select  count(1) 
+        from distrnames
+        <where >
+            <include refid="condition" />
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="com.cuke.entity.Distrnames" >
+        insert into distrnames (`id`, `cityid`, `city`, 
+            `districtid`, `district`)
+        values (#{id,jdbcType=INTEGER}, #{cityid,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+            #{districtid,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.cuke.entity.Distrnames" >
+        insert into distrnames
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                `id`,
+            </if>
+            <if test="cityid != null" >
+                `cityid`,
+            </if>
+            <if test="city != null" >
+                `city`,
+            </if>
+            <if test="districtid != null" >
+                `districtid`,
+            </if>
+            <if test="district != null" >
+                `district`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="cityid != null" >
+                #{cityid,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null" >
+                #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="districtid != null" >
+                #{districtid,jdbcType=VARCHAR},
+            </if>
+            <if test="district != null" >
+                #{district,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.cuke.entity.Distrnames" >
+        update distrnames
+        <set >
+            <if test="cityid != null" >
+                `cityid` = #{cityid,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null" >
+                `city` = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="districtid != null" >
+                `districtid` = #{districtid,jdbcType=VARCHAR},
+            </if>
+            <if test="district != null" >
+                `district` = #{district,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where `id` = #{id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from distrnames
+        where `id` = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <sql id="condition" >
+        <if test="cityid != null" >
+             and `cityid` = #{cityid}
+        </if>
+        <if test="city != null" >
+             and `city` = #{city}
+        </if>
+        <if test="districtid != null" >
+             and `districtid` = #{districtid}
+        </if>
+        <if test="district != null" >
+             and `district` = #{district}
+        </if>
+    </sql>
+
+</mapper>

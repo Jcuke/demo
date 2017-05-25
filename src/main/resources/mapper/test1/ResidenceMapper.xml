@@ -16,10 +16,6 @@
         <result column="fyurl" property="fyurl" jdbcType="VARCHAR" />
     </resultMap>
 
-    <!--<select id="saveSelective" resultType="com.cuke.entity.Residence">-->
-        <!--select 1 from dual;-->
-    <!--</select>-->
-
     <sql id="Base_Column_List" >
         `id`, `title`, `district`, `districtid`, `city`, `cityid`, `xiaoqu`, `xiaoquid`, 
         `jiage`, `danjia`, `area`, `fyurl`
@@ -62,11 +58,11 @@ from residence
         insert into residence (`id`, `title`, `district`, 
             `districtid`, `city`, `cityid`, 
             `xiaoqu`, `xiaoquid`, `jiage`, 
-            `danjia`, `area`)
+            `danjia`, `area`, `fyurl`)
         values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, 
             #{districtid,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{cityid,jdbcType=VARCHAR}, 
             #{xiaoqu,jdbcType=VARCHAR}, #{xiaoquid,jdbcType=VARCHAR}, #{jiage,jdbcType=DECIMAL}, 
-            #{danjia,jdbcType=DECIMAL}, #{area,jdbcType=REAL},#{fyurl,jdbcType=VARCHAR})
+            #{danjia,jdbcType=DECIMAL}, #{area,jdbcType=REAL}, #{fyurl,jdbcType=VARCHAR})
     </insert>
 
     <insert id="insertSelective" parameterType="com.cuke.entity.Residence" useGeneratedKeys="true" keyProperty="id">
@@ -233,5 +229,18 @@ from residence
     <select id="getWhEachDistrictData" resultType="java.util.Map">
         select districtid,floor(avg(danjia)) as jiage from residence t where t.cityid='wh' group by districtid
     </select>
+
+    <insert id="insertPageUrl" parameterType="com.cuke.entity.Pageurl" >
+        insert into pageurl (`pageurl`, `date`,`success`)
+        values(#{pageurl},#{date},#{success})
+    </insert>
+
+    <select id="getAllPageUrls" resultType="java.lang.String">
+        select pageurl from pageurl where success=0
+    </select>
+
+    <update id="updatePageUrlSuccess" parameterType="java.lang.String">
+        update pageurl set success=1 where pageurl = #{pageurl}
+    </update>
 
 </mapper>

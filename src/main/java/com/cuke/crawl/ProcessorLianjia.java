@@ -26,16 +26,15 @@ public class ProcessorLianjia implements PageProcessor{
         this.residenceService = residenceService;
     }
 
-    private Site site = Constant.site;
-
-    public static final String url = Constant.url;
-
     @Override
     public void process(Page page) {
         try {
             Thread.sleep(200);
-            if(page.getUrl().regex(url).match()){
+            if(page.getUrl().regex(Constant.url).match()){
                 List<Selectable> list = page.getHtml().xpath("/html/body/div[4]/div[1]/ul/li").nodes();
+                if(list.size() > 0){
+                    residenceService.updateCustomSql("updatePageUrlSuccess", page.getUrl().toString());
+                }
                 for (Selectable s : list) {
                     Residence res = new Residence();
 
@@ -59,8 +58,8 @@ public class ProcessorLianjia implements PageProcessor{
                     res.setJiage(new BigDecimal(jiage));
                     res.setDanjia(new BigDecimal(danjia));
                     String pageUrl = page.getUrl().toString();
-                    String cityCode = pageUrl.replaceAll("https://", "").replaceAll(".lianjia.com/ershoufang/[a-z]+/pg[0-9]+/", "");
                     String districCode = pageUrl.replaceAll("https://[a-z]+.lianjia.com/ershoufang/", "").replaceAll("/pg[0-9]+/", "");
+                    String cityCode = pageUrl.replaceAll("https://", "").replaceAll(".lianjia.com/ershoufang/"+ districCode +"/pg[0-9]+/", "");
                     res.setCityid(cityCode);
                     res.setDistrictid(districCode);
                     res.setFyurl(s.xpath("//*/a/@href").toString());
@@ -78,7 +77,7 @@ public class ProcessorLianjia implements PageProcessor{
 
     @Override
     public Site getSite() {
-        return this.site;
+        return Constant.site;
     }
 
     public static void main(String[] args) {

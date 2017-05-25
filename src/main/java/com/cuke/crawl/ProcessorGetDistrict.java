@@ -1,8 +1,10 @@
 package com.cuke.crawl;
 
 import com.cuke.config.Constant;
+import com.cuke.dao.DistrnamesDao;
 import com.cuke.entity.Districturl;
 import com.cuke.demo.SysInit;
+import com.cuke.entity.Distrnames;
 import com.cuke.service.DistricturlService;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
@@ -17,23 +19,22 @@ import java.util.List;
  */
 public class ProcessorGetDistrict implements PageProcessor{
 
+    public DistrnamesDao distrnamesDao;
     public DistricturlService districturlService;
 
-    public ProcessorGetDistrict(DistricturlService districturlService) {
+    public ProcessorGetDistrict(DistricturlService districturlService, DistrnamesDao distrnamesDao) {
         this.districturlService = districturlService;
+        this.distrnamesDao = distrnamesDao;
     }
 
     public ProcessorGetDistrict(){
     }
-    private Site site = Constant.site;
-
-    public static final String url = Constant.url;
 
     @Override
     public void process(Page page) {
         try {
             Thread.sleep(1000);
-            if(page.getUrl().regex(url).match()){
+            if(page.getUrl().regex(Constant.url).match()){
                 List<Selectable> list = null;
                 if(page.getUrl().toString().contains("sh.")){
                     list = page.getHtml().xpath("//*[@id=\"plateList\"]/div/a").nodes();
@@ -46,8 +47,9 @@ public class ProcessorGetDistrict implements PageProcessor{
                     }
                     String districtCode = s.xpath("//*/@href").toString().replace("http://", "").split("/")[2];
                     String district = s.xpath("//*/text()").toString();
-                    System.out.println(districtCode + "   " + district);
                     String cityCode = page.getUrl().toString().replace("http://", "").replace(".lianjia.com/ershoufang/", "");
+                    String city = Constant.getCityByCode(cityCode);
+                    System.out.println("城市"+ cityCode +": " + city + " 区" + districtCode + ":" + district);
                     String districtPageUrl = "https://"+ cityCode +".lianjia.com/ershoufang/"+ districtCode +"/";
                     SysInit.districUtls.add(districtPageUrl);
 
@@ -57,6 +59,14 @@ public class ProcessorGetDistrict implements PageProcessor{
                         du.setCityid(cityCode);
                         du.setUrl(districtPageUrl);
                         districturlService.saveSelective(du);
+
+                        //保存区名和区拼音的关系记录
+                        Distrnames dn = new Distrnames();
+                        dn.setDistrict(district);
+                        dn.setDistrictid(districtCode);
+                        dn.setCityid(cityCode);
+                        dn.setCity(city);
+                        distrnamesDao.saveSelective(dn);
                     }
                 }
             }
@@ -67,7 +77,7 @@ public class ProcessorGetDistrict implements PageProcessor{
 
     @Override
     public Site getSite() {
-        return this.site;
+        return Constant.site;
     }
 
     public static void main(String[] args) {
@@ -81,7 +91,7 @@ public class ProcessorGetDistrict implements PageProcessor{
             spider.addUrl(xx);
             spider.thread(1);
             spider.setExitWhenComplete(true);
-            spider.start();
+            spider.run();
 
 
         }catch (Exception e){

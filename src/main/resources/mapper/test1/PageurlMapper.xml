@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="PageurlMapper" >
+    <resultMap id="BaseResultMap" type="com.cuke.entity.Pageurl" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="pageurl" property="pageurl" jdbcType="VARCHAR" />
+        <result column="date" property="date" jdbcType="BIGINT" />
+        <result column="success" property="success" jdbcType="TINYINT" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        `id`, `pageurl`, `date`, `success`
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from pageurl
+        where `id` = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByModel" resultMap="BaseResultMap" parameterType="com.cuke.entity.Pageurl" >
+        select 
+<include refid="Base_Column_List" /> 
+from pageurl
+        <where >
+            <include refid="condition" />
+        </where>
+        <if test="orderBy!=null" >
+            order by ${orderBy}
+        </if>
+        <if test="orderBy!=null and sortBy!=null" >
+            ${sortBy} 
+        </if>
+        <if test="beginRow!=null and pageSize!=null" >
+            limit #{beginRow},#{pageSize}
+        </if>
+    </select>
+
+    <select id="selectCountByModel" resultType="java.lang.Integer" parameterType="com.cuke.entity.Pageurl" >
+        select  count(1) 
+        from pageurl
+        <where >
+            <include refid="condition" />
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="com.cuke.entity.Pageurl" >
+        insert into pageurl (`id`, `pageurl`, `date`, 
+            `success`)
+        values (#{id,jdbcType=INTEGER}, #{pageurl,jdbcType=VARCHAR}, #{date,jdbcType=BIGINT}, 
+            #{success,jdbcType=TINYINT})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.cuke.entity.Pageurl" >
+        insert into pageurl
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                `id`,
+            </if>
+            <if test="pageurl != null" >
+                `pageurl`,
+            </if>
+            <if test="date != null" >
+                `date`,
+            </if>
+            <if test="success != null" >
+                `success`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="pageurl != null" >
+                #{pageurl,jdbcType=VARCHAR},
+            </if>
+            <if test="date != null" >
+                #{date,jdbcType=BIGINT},
+            </if>
+            <if test="success != null" >
+                #{success,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.cuke.entity.Pageurl" >
+        update pageurl
+        <set >
+            <if test="pageurl != null" >
+                `pageurl` = #{pageurl,jdbcType=VARCHAR},
+            </if>
+            <if test="date != null" >
+                `date` = #{date,jdbcType=BIGINT},
+            </if>
+            <if test="success != null" >
+                `success` = #{success,jdbcType=TINYINT},
+            </if>
+        </set>
+        where `id` = #{id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from pageurl
+        where `id` = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <sql id="condition" >
+        <if test="pageurl != null" >
+             and `pageurl` = #{pageurl}
+        </if>
+        <if test="date != null" >
+             and `date` = #{date}
+        </if>
+        <if test="success != null" >
+             and `success` = #{success}
+        </if>
+    </sql>
+
+</mapper>
