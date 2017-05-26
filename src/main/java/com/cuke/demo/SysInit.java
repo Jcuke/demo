@@ -16,20 +16,25 @@ public class SysInit {
         System.setProperty("javax.Net.ssl.trustStore", "classpath:jssecacerts");
     }
 
-    public static Spider start(){
+    public static Spider start(String... cityid){
         DistrnamesDao distrnamesDao = (DistrnamesDao) SpringBeanUtil.getBean("distrnamesDaoImpl");
         DistricturlService districturlService = (DistricturlService) SpringBeanUtil.getBean("districturlService");
         ResidenceService residenceService = (ResidenceService) SpringBeanUtil.getBean("residenceService");
         ProcessorMain lj = new ProcessorMain(distrnamesDao,districturlService,residenceService);
         Spider spider = null;
         try {
-            String[] urls = new String[Constant.cityCodeArray.length];
-            for (int i =0; i< Constant.cityCodeArray.length;i++) {
-                urls[i] = "https://" + Constant.cityCodeArray[i] + ".lianjia.com/ershoufang/";
+            String[] urls = null;
+            if(cityid != null && cityid.length > 0){
+                urls = cityid;
+            }else{
+                urls = new String[Constant.cityCodeArray.length];
+            }
+            for (int i =0; i< urls.length; i++) {
+                urls[i] = "https://" + urls[i] + ".lianjia.com/ershoufang/";
             }
             spider = Spider.create(lj);
             spider.addUrl(urls);
-            spider.thread(1);
+            spider.thread(60);
             spider.setExitWhenComplete(true);
             spider.start();
         }catch (Exception e){

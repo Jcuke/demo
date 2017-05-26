@@ -1,18 +1,14 @@
 package com.cuke.crawl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.cuke.config.Constant;
 import com.cuke.dao.DistrnamesDao;
-import com.cuke.demo.SysInit;
 import com.cuke.entity.Districturl;
 import com.cuke.entity.Distrnames;
+import com.cuke.entity.Pageurl;
 import com.cuke.entity.Residence;
 import com.cuke.service.DistricturlService;
 import com.cuke.service.ResidenceService;
 import com.cuke.util.StringUtil;
-import com.google.gson.JsonObject;
-import net.minidev.json.JSONArray;
-import net.minidev.json.JSONUtil;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.Site;
@@ -22,6 +18,7 @@ import us.codecraft.webmagic.selector.Html;
 import us.codecraft.webmagic.selector.Selectable;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -106,18 +103,30 @@ public class ProcessorMain implements PageProcessor{
 
         //next page
         String pageJsonStr = html.xpath("/html/body/div[4]/div[1]/div[7]/div[2]/div/@page-data").toString();
+        if(null == pageJsonStr){
+            //该区无房源记录,无page按钮
+            return;
+        }
         Map<String, Double> pageJson = StringUtil.getDoubleMapFromJsonObjStr(pageJsonStr);
         Integer totalPage = pageJson.get("totalPage").intValue();
-        Integer curPage = pageJson.get("curPage").intValue();;
+        Integer curPage = pageJson.get("curPage").intValue();
         System.out.println(pageJsonStr);
 
         if(curPage < totalPage){
+            Pageurl pu = new Pageurl();
+            pu.setSuccess(0);
+            pu.setDate(new Date().getTime() / 1000);
             for (int i = curPage+1; i<totalPage; i++){
+                pu.setPageurl("https://"+ cityCode +".lianjia.com/ershoufang/"+ districtCode +"/pg"+ i +"/");
+                residenceService.updateCustomSql("insertPageUrl", pu);
+                /*insert into pageurl (`pageurl`, `date`,`success`)
+                values(#{pageurl},#{date},#{success})
+                select #{pageurl},#{date},#{success} from dual
+                where not exists (select 1 from pageurl where pageurl=#{pageurl})*/
                 Request request = new Request(page.getUrl().toString() + "pg" + i + "/").putExtra("districtCode", districtCode).putExtra("cityCode", cityCode);;
                 page.addTargetRequest(request);
             }
         }
-
     }
 
     /**

@@ -226,8 +226,10 @@ from residence
         </if>
     </sql>
 
-    <select id="getWhEachDistrictData" resultType="java.util.Map">
-        select districtid,floor(avg(danjia)) as jiage from residence t where t.cityid='wh' group by districtid
+    <select id="getWhEachDistrictData" resultType="java.util.Map" parameterType="java.util.Map">
+        select n.district,floor(avg(danjia)) as jiage from residence t
+        inner join distrnames n on t.districtid=n.districtid and t.cityid=n.cityid
+        where t.cityid = #{cityid} group by t.districtid
     </select>
 
     <insert id="insertPageUrl" parameterType="com.cuke.entity.Pageurl" >
@@ -242,5 +244,24 @@ from residence
     <update id="updatePageUrlSuccess" parameterType="java.lang.String">
         update pageurl set success=1 where pageurl = #{pageurl}
     </update>
+
+    <select id="getCityNames" resultType="java.util.Map">
+        select cityid,city from distrnames group by cityid,city
+    </select>
+
+    <select id="getEachDistrictFyCount" resultType="java.util.Map"  parameterType="java.util.Map">
+        select n.district,count(1) as count from residence r inner join distrnames n on r.districtid=n.districtid and r.cityid=n.cityid
+where r.cityid= #{cityid} group by r.districtid
+    </select>
+
+    <select id="getEachCityFyCount" resultType="java.util.Map">
+        select n.city,count(1) as count from residence r inner join distrnames n on r.districtid=n.districtid and r.cityid=n.cityid
+        group by r.cityid
+    </select>
+
+    <select id="getEachCityData" resultType="java.util.Map">
+        select n.city,floor(avg(r.danjia)) as jiage from residence r inner join distrnames n on r.districtid=n.districtid and r.cityid=n.cityid
+        group by r.cityid
+    </select>
 
 </mapper>

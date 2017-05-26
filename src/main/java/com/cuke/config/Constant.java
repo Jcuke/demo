@@ -1,5 +1,6 @@
 package com.cuke.config;
 
+import org.apache.http.HttpHost;
 import us.codecraft.webmagic.Site;
 
 /**
@@ -9,6 +10,8 @@ public class Constant {
 
 
     public static final String[] cityCodeArray = {"wh", "bj", "tj", "nj", "qd", "dl", "sz", "cd", "cq", "jn", "gz", "hz", "cs", "xm", "sy", "hf"};
+//    public static final String[] cityCodeArray = {"sh"};
+    //上海链家网站xpath不一样,需要单独爬取
 
     public static String getCityByCode(String code) {
         String name = "";
@@ -75,17 +78,19 @@ public class Constant {
 
 
     public static final Site site = Site.me()
-            .setDomain("www.lianjia.com")
+            .setDomain("lianjia.com")
             .setRetryTimes(6)
             .setCycleRetryTimes(6)
-            .setSleepTime(100)
+            .setSleepTime(2000)
             .addHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")
             .addHeader("Accept-Encoding", "gzip, deflate, sdch, br")
             .addHeader("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6")
+            .addHeader("Cache-Control", "max-age=0")
             .addHeader("Connection", "keep-alive")
-            .addHeader("Host", "www.lianjia.com")
-//            .addHeader("Referer", "https://cq.lianjia.com/")
             .addHeader("Upgrade-Insecure-Requests", "1")
-            .addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
-            .addHeader("Cookie", "lianjia_uuid=0ae63f68-df84-4635-849f-c9fd65293428; UM_distinctid=15c303aaa21685-0de4a46457fa3e-5d4e211f-1fa400-15c303aaa2236f; gr_user_id=70a616c5-4e3e-4d6a-bc34-5f5be2fa253f; _jzqx=1.1495543374.1495724923.3.jzqsr=captcha%2Elianjia%2Ecom|jzqct=/.jzqsr=lianjia%2Ecom|jzqct=/ershoufang/wuhou/pg2/; _jzqckmp=1; all-lj=1e9f8fe64a0d8d4cd8642eafcff9cfff; _qzja=1.1361273877.1495755387364.1495755387364.1495755387364.1495755387364.1495755387364.0.0.0.1.1; _qzjb=1.1495755387364.1.0.0.0; _qzjc=1; _qzjto=1.1.0; CNZZDATA1255849584=320431035-1495755385-%7C1495755385; CNZZDATA1254525948=933906727-1495752660-%7C1495752660; CNZZDATA1255633284=412648585-1495755367-%7C1495755367; CNZZDATA1255604082=473793621-1495753309-%7C1495753309; select_city=510100; gr_session_id_a1a50f141657a94e=26f24538-23bf-4877-bc21-15598c1da267; _smt_uid=59276a69.356eabff; _jzqa=1.2087680399991776000.1495755370.1495755370.1495755370.1; _jzqc=1; _jzqb=1.4.10.1495755370.1; _ga=GA1.2.1378865938.1495457777; _gid=GA1.2.987780719.1495755738; lianjia_ssid=ceebd31e-4e8a-0954-1fdd-be0b05375d20");
+//            .addHeader("Host", "www.lianjia.com")
+            .addHeader("Referer", "https://wh.lianjia.com/ershoufang/")
+            .addHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36")
+            .addHeader("Cookie", "lianjia_uuid=b4097b46-4176-4d3f-aaf3-d74c368a00c6; all-lj=492291e11daf53bf34d39f84cc442d11; UM_distinctid=15c3472cee19ca-0bd4e0950385c7-6a11157a-100200-15c3472cee257e; gr_user_id=fd4a1abe-80b1-4f61-a510-c2172f612858; _jzqckmp=1; sample_traffic_test=controlled_66; cityCode=sh; __xsptplus696=696.3.1495695430.1495696656.16%234%7C%7C%7C%7C%7C%23%23sDN4h7WnLFKgt2spkZRX582fbM45tfoI%23; ubt_load_interval_b=1495696656177; ubta=2299869246.3967010957.1495591351451.1495696619307.1495696656624.20; ubtc=2299869246.3967010957.1495696656625.E5CC6DEF6AF63D1E5DA8988E60649FDB; ubtd=20; CNZZDATA1255849575=1592477912-1495525193-%7C1495699022; CNZZDATA1254525948=661031361-1495525093-%7C1495702665; CNZZDATA1255633284=1126531119-1495523992-%7C1495702131; CNZZDATA1255604082=218540706-1495526209-%7C1495699070; _qzja=1.2144972645.1495528560415.1495698671201.1495703838842.1495698671201.1495703838842.0.0.0.16.6; _qzjc=1; select_city=510100; _jzqx=1.1495587324.1495706300.3.jzqsr=wh%2Elianjia%2Ecom|jzqct=/ershoufang/jiangan/.jzqsr=cd%2Elianjia%2Ecom|jzqct=/ershoufang/; _smt_uid=5923f46f.e37720d; _jzqa=1.1500736511112945700.1495528560.1495695227.1495706300.8; _jzqc=1; _ga=GA1.2.979376642.1495528563; _gid=GA1.2.234658946.1495707072")
+            .setHttpProxy(new HttpHost("127.0.0.1", 8080));
 }
