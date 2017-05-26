@@ -46,6 +46,7 @@ fabric.properties
 ### Gradle template
 .gradle
 /build/
+/classes/*
 
 # Ignore Gradle GUI config
 gradle-app.setting
@@ -75,3 +76,5 @@ build/
 tmlog0.log
 demo.iml
 tmlog1.log
+.idea/
+classes/
