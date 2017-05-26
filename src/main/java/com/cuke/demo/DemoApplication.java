@@ -24,8 +24,7 @@ public class DemoApplication extends WebMvcConfigurerAdapter{
 
 //        new Thread(new MyThread()).start();
 
-//        SysInit.init1();
-        SysInit.start2();
+        SysInit.start();
 	}
 
 //    @Override
