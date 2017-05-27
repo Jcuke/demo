@@ -1,9 +1,59 @@
 $(function () {
+    //$('#time').html(new Date().toLocaleString());
+    setInterval("$('#time').html('Drag me ' + new Date().toLocaleString());",1000);
+    setInterval("$('#time').css('background-color', 'yellow');$('#time').css('color', 'black');",1500);
+    setInterval("$('#time').css('background-color', 'pink');$('#time').css('color', 'blue');",2000);
+    setInterval("$('#time').css('background-color', 'green');$('#time').css('color', '#FF11FF');",2500);
+
+    var rDrag = {
+        o:null,
+        init:function(o){
+            o.onmousedown = this.start;
+        },
+        start:function(e){
+            var o;
+            e = rDrag.fixEvent(e);
+            e.preventDefault && e.preventDefault();
+            rDrag.o = o = this;
+            o.x = e.clientX - rDrag.o.offsetLeft;
+            o.y = e.clientY - rDrag.o.offsetTop;
+            document.onmousemove = rDrag.move;
+            document.onmouseup = rDrag.end;
+        },
+        move:function(e){
+            e = rDrag.fixEvent(e);
+            var oLeft,oTop;
+            oLeft = e.clientX - rDrag.o.x;
+            oTop = e.clientY - rDrag.o.y;
+            rDrag.o.style.left = oLeft + 'px';
+            rDrag.o.style.top = oTop + 'px';
+        },
+        end:function(e){
+            e = rDrag.fixEvent(e);
+            rDrag.o = document.onmousemove = document.onmouseup = null;
+        },
+        fixEvent: function(e){
+            if (!e) {
+                e = window.event;
+                e.target = e.srcElement;
+                e.layerX = e.offsetX;
+                e.layerY = e.offsetY;
+            }
+            return e;
+        }
+    };
+    rDrag.init($('#time')[0]);//回忆起很早老马说的话，dom对象转jquery对象时加[0]
+
+    $('button,select,div').addClass('border-radius-ten-px');
+
+    //$(button).addClass()
 
     //显示遮罩层
     var showMask = function showMask(){
-        $("#mask").css("height",$(document).height());
-        $("#mask").css("width",$(document).width());
+        $("#mask").css("height",screen.height);
+        $("#mask").css("width",screen.width);
+        //$("#mask").css("height",document.body.clientHeight);
+        //$("#mask").css("width",document.body.clientHeight);
         $("#mask").show();
     };
     //隐藏遮罩层
@@ -14,6 +64,9 @@ $(function () {
     };
 
     showMask();
+    $('#divBody').css("height",screen.height * 0.75);
+    $('#chartdiv').css("height",screen.height * 0.7);
+    $('#chartdiv3').css("height",screen.height * 0.7);
 
     $('#crwalBtn').click(function () {
         var cityid = $('#select1').val();
@@ -70,13 +123,13 @@ $(function () {
                     "size": 25,
                     "bold": true,
                     "text": "1995",
-                    "color": "#555"
+                    "color": "#51e30c"
                 }, {
                     "y": "49%",
                     "align": "center",
                     "size": 15,
                     "text": "Year",
-                    "color": "#555"
+                    "color": "#51e30c"
                 }],
                 "listeners": [{
                     "event": "init",
@@ -260,13 +313,13 @@ $(function () {
                     "size": 25,
                     "bold": true,
                     "text": "1995",
-                    "color": "#555"
+                    "color": "#51e30c"
                 }, {
                     "y": "49%",
                     "align": "center",
                     "size": 15,
                     "text": "Year",
-                    "color": "#555"
+                    "color": "#51e30c"
                 }],
                 "listeners": [{
                     "event": "init",

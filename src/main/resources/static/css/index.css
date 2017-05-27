@@ -3,7 +3,26 @@ body {
     margin-right: 30px;
     margin-bottom: 30px;
     margin-left: 20px;
+
+    overflow-y: hidden;
+    background-color:transparent;
+    background-repeat:no-repeat;
+    background-size:cover;
+
+    filter:alpha(Opacity=90);
+    -moz-opacity:0.9;
+    opacity: 0.9;
+    z-index:-11;
 }
+
+.chartDivTransparent {
+    background-color:darkred;
+    filter:alpha(Opacity=8);
+    -moz-opacity:0.8;
+    opacity: 0.8;
+    z-index:3;
+}
+
 #chartdiv {
     width		: 80%;
     height		: 80%;
@@ -16,9 +35,36 @@ body {
     font-size	: 18px;
 }
 
+.chartFont{
+    color: fuchsia;
+}
+
 .mask {
     position: absolute; top: 0px; filter: alpha(opacity=60); background-color: #777;
     z-index: 1002; left: 0px;
     opacity:0.8; -moz-opacity:0.5;
     display: none;
+    overflow-y : hidden;
+}
+
+#time{
+    background-color: blue;
+    filter: alpha(opacity=60);opacity:0.6; -moz-opacity:0.6;
+    position: absolute;
+    border-radius: 10px;
+    top: 0px;
+    z-index: 5;
+    right: 20%;
+    display : block;
+    width: 25%;
+    height: 4%;
+    font-size: 18px;
+    color: #ffffff;
+    vertical-align: middle;
+    text-align:center;
+}
+
+.border-radius-ten-px{
+    border-radius: 20px 20px 20px 20px;
+    font-family: fantasy;
 }
